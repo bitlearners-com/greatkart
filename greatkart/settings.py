@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'category', 
     'store',
+    'carts',
+    'accounts',
     
 ]
 
@@ -67,6 +69,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'category.context_processors.manu_links',
+                'carts.context_processors.counter',
 
             ],
         },
@@ -74,6 +77,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'greatkart.wsgi.application'
+
+AUTH_USER_MODEL = 'accounts.Account'
 
 
 
