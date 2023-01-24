@@ -128,45 +128,131 @@
             </div>
     </header><!-- sect-heading -->
     
-    <div class="row">
+    <div class="row" id="product-cont">
 
-        {% for product in products %}
         <div class="col-md-4">
             <figure class="card card-product-grid">
                 <div class="img-wrap"> 
-                    <a href ="{{product.get_url}}">
+                    <a href ="{{products.first.get_url}}">
                     
-                    <img src="{{product.image.url}}">
+                    <img src="{{products.first.image.url}}">
                     </a>
                     
                 </div> <!-- img-wrap.// -->
                 <figcaption class="info-wrap">
                     <div class="fix-height">
-                        <a href="{{product.get_url}}" class="title">{{ product.product_name}}</a>
+                        <a href="{{product.get_url}}" class="title">{{ products.first.product_name}}</a>
                         <div class="price-wrap mt-2">
-                            <span class="price">₹ {{product.price}}</span>
+                            <span class="price">₹ {{products.first.price}}</span>
                         </div> <!-- price-wrap.// -->
                     </div>
-                    <a href="{% url 'add_cart' product.id  %}" class="btn btn-block btn-primary">Add to cart </a>
+                    <a href="{% url 'add_cart' products.first.id  %}" class="btn btn-block btn-primary">Add to cart </a>
                 </figcaption>
             </figure>
         </div> <!-- col.// -->
 
-        {% endfor %}
 
     </div> <!-- row end.// -->
     
     
     <nav class="mt-4" aria-label="Page navigation sample">
+    {% if not products.has_other_pages %}
       <ul class="pagination">
+        {% if products.has_previous %}
+        <li class="page-item "><a class="page-link" href="?page={{products.previous_page_number}}">Previous</a></li>
+        {% else %}
         <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
+
+        {% for i in page_range %}
+            {% if products.number == i %}
+
+            <!--<li class="page-item active"><a class="page-link"  href="{{i}}">{{i}}</a></li>
+                -->
+            {% else %}
+
+            <li class="page-item"><a class="page-link" href="{{i}}">{{i}}</a></li>
+
+            {% endif %}
+
+        {% endfor %}
+
+        {% if products.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{products.next_page_number}}">Next</a></li>
+        {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+        {% endif %}
+
       </ul>
+    {% endif %}
     </nav>
     
+
+
+<script>
+
+function load_data(product){
+
+
+       a = `<div class="col-md-4">
+            <figure class="card card-product-grid">
+                <div class="img-wrap"> 
+                    <a href ="${product.product_url}">
+                    
+                    <img src="${product.image_url}">
+                    </a>
+                    
+                </div> <!-- img-wrap.// -->
+                <figcaption class="info-wrap">
+                    <div class="fix-height">
+                        <a href="${product.product_url}" class="title">${product.product_name}</a>
+                        <div class="price-wrap mt-2">
+                            <span class="price">₹ ${product.price}</span>
+                        </div> <!-- price-wrap.// -->
+                    </div>
+                    <a href="{% url 'add_cart' products.first.id  %}" class="btn btn-block btn-primary">Add to cart </a>
+                </figcaption>
+            </figure>
+        </div> `
+return a ;
+
+}
+
+
+
+$('a.page-link').click(function(event){
+    event.preventDefault();
+    var page_n = $(this).attr('href');
+    // ajax
+        $.ajax({
+                type: "POST",
+                url: "{% url 'pagination_p' %}", // name of url
+                data : {    
+                page_n : page_n, //page_number
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (resp) {
+                //loop
+                $('#product-cont').html('')
+                $.each(resp.results, function(event, product) {
+                 //apending posts
+                    product.image_url = product.image_url
+                    product.product_url = product.product_url
+                console.log(product)
+                console.log("{{products}}")
+
+                 $('#product-cont').append(load_data(product))
+               
+               });
+            },
+            error: function () {}
+        }); // 
+
+});    
+</script>
+
+
+
         </main> <!-- col.// -->
     
     </div>
