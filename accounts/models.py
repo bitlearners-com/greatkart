@@ -53,6 +53,22 @@ class Account(AbstractBaseUser):
 	email 					= models.CharField(max_length=110, unique= True)
 	phone_number			= models.CharField(max_length=50)
 
+
+	#optional
+
+	gender					= models.CharField(max_length=1)
+	dob						= models.DateTimeField(auto_now_add=True)
+	address					= models.CharField(max_length=150)
+	city					= models.CharField(max_length=80)
+	state					= models.CharField(max_length=80)
+	country					= models.CharField(max_length=80)
+	proff_id				= models.CharField(max_length=80) # profession Ex: Engineer, Student, Clerk
+	language 				= models.CharField(max_length=50)
+	profile_img				= models.ImageField(upload_to='photos/profile_pics', blank =True )
+	#slug 					= models.SlugField(max_length=100, unique=True)
+
+
+
 	#requred 
 	
 	date_joined 			= models.DateTimeField(auto_now_add=True)
@@ -61,6 +77,7 @@ class Account(AbstractBaseUser):
 	is_staff			 	= models. BooleanField(default=False)
 	is_active 				= models. BooleanField(default=False)
 	is_superadmin			= models. BooleanField(default=False)
+
 
 
 

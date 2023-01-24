@@ -80,7 +80,12 @@ WSGI_APPLICATION = 'greatkart.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.Account'
 
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
 
+    messages.ERROR: 'danger',
+    
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
