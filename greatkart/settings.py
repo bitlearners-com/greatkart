@@ -25,7 +25,12 @@ SECRET_KEY = 'th_%#pmvs_#%vv@$#5s3br6w3mlhgmk4!mrx06@5xuim=*_0@l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.1.33',
+    '192.168.1.41',
+    '127.0.0.1',
+
+]
 
 
 # Application definition
@@ -78,14 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'greatkart.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.Account'
-
-from django.contrib.messages import constants as messages
-MESSAGE_TAGS = {
-
-    messages.ERROR: 'danger',
-    
-}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -145,5 +142,25 @@ STATICFILES_DIRS = [
 
 MEDIA_URL='/media/'
 MEDIA_ROOT = BASE_DIR /'media'
+
+
+AUTH_USER_MODEL = 'accounts.Account'
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+
+    messages.ERROR: 'danger',
+    
+}
+
+
+# SMTP configuration
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "app.rajaakash@gmail.com"
+EMAIL_HOST_PASSWORD = "prqfdsiavoklxymd"
+EMAIL_USE_TLS = True
+
+
 
 

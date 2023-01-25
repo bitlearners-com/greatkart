@@ -46,11 +46,11 @@
 				
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label>Create password</label>
+						<label>Enter Password</label>
 					    {{ form.password }}
 					</div> <!-- form-group end.// --> 
 					<div class="form-group col-md-6">
-						<label>Repeat password</label>
+						<label>Confirm password</label>
 					    {{ form.confirm_password }}
 					</div> <!-- form-group end.// -->  
 				</div>
@@ -62,7 +62,7 @@
 			</form>
 		</article><!-- card-body.// -->
     </div> <!-- card .// -->
-    <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
+    <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
     <br><br>
 <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
 
